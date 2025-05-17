@@ -1,4 +1,4 @@
-# BibTeX Tools
+# BiB Killer
 
 A collection of Python tools for managing BibTeX files, including merging, deduplication, and citation key extraction.
 
