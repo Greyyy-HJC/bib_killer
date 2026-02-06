@@ -1,5 +1,5 @@
 import argparse
-from bib_utils import get_all_entries, process_bib_entries, write_bib_file
+from bib_utils import get_all_entries, process_bib_entries, write_bib_file, sort_keys_by_year
 
 def merge_bib_files(input_files, output_file, output_keys=None):
     """
@@ -21,7 +21,7 @@ def merge_bib_files(input_files, output_file, output_keys=None):
     
     # Write keys if requested
     if output_keys:
-        unique_keys = sorted(unique_entries.keys())
+        unique_keys = sort_keys_by_year(unique_entries.keys())
         with open(output_keys, 'w') as f:
             f.write(','.join(unique_keys))
         print(f"Citation keys written to: {output_keys}")

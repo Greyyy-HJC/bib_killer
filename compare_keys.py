@@ -1,4 +1,15 @@
 import argparse
+import re
+
+def sort_keys_by_year(keys):
+    """
+    Sort citation keys by year (extracted from key format: Author:YYYYsuffix).
+    """
+    def get_year(key):
+        match = re.search(r':(\d{4})', key)
+        return int(match.group(1)) if match else 9999
+    
+    return sorted(keys, key=get_year)
 
 def compare_key_files(file1, file2, output_file):
     """
@@ -18,11 +29,11 @@ def compare_key_files(file1, file2, output_file):
             keys2 = set(key.strip() for key in f.read().split(','))
         
         # Find duplicate keys
-        duplicate_keys = sorted(keys1.intersection(keys2))
+        duplicate_keys = sort_keys_by_year(keys1.intersection(keys2))
         
         # Find unique keys in each file
-        only_in_file1 = sorted(keys1 - keys2)
-        only_in_file2 = sorted(keys2 - keys1)
+        only_in_file1 = sort_keys_by_year(keys1 - keys2)
+        only_in_file2 = sort_keys_by_year(keys2 - keys1)
         
         # Write results to output file
         with open(output_file, 'w') as f:

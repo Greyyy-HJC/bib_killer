@@ -1,4 +1,21 @@
+import re
 import bibtexparser
+
+def sort_keys_by_year(keys):
+    """
+    Sort citation keys by year (extracted from key format: Author:YYYYsuffix).
+    
+    Args:
+        keys (list or set): List/set of citation keys
+        
+    Returns:
+        list: Sorted list of keys by year (early to late)
+    """
+    def get_year(key):
+        match = re.search(r':(\d{4})', key)
+        return int(match.group(1)) if match else 9999
+    
+    return sorted(keys, key=get_year)
 
 def process_bib_entries(entries):
     """
