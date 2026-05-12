@@ -1,5 +1,38 @@
 # PROJECT_LOG.md
 
+## 2026-05-12 - Project Root Directory Cleanup
+
+### Context
+
+After the major refactoring, the project root still contained various system files, temporary directories, and unorganized example data that cluttered the repository structure.
+
+### Changes
+
+**Removed Files**
+- `.DS_Store` - macOS system file
+- `SDF_keys_short.txt` - Obsolete key list
+- `INIT.md` - No longer needed after refactoring completion
+
+**Deleted Directories**
+- `output/` - Old generated files (refs.bib, keys.txt, etc.)
+- `temp/` - Temporary working files
+
+**Reorganized**
+- Moved `bib_LaMET/` and `bib_SDF/` to `examples/` directory for better organization
+
+**Updated**
+- `.gitignore` - Removed exclusions for bib directories to track examples
+
+### Result
+
+The project root now contains only essential files and directories:
+- Core documentation (SPEC, AGENTS, CLAUDE, README, PROJECT_LOG)
+- Source code (`src/`)
+- Example data (`examples/`)
+- Configuration files (requirements.txt, .gitignore, LICENSE)
+
+---
+
 ## 2026-05-12 - Major Repository Refactoring
 
 ### Context
