@@ -1,5 +1,8 @@
+"""Core utilities for BibTeX processing used across all commands."""
+
 import re
 import bibtexparser
+
 
 def sort_keys_by_year(keys):
     """
@@ -17,6 +20,7 @@ def sort_keys_by_year(keys):
     
     return sorted(keys, key=get_year)
 
+
 def process_bib_entries(entries):
     """
     Process bibtex entries to remove duplicates.
@@ -32,6 +36,7 @@ def process_bib_entries(entries):
         unique_entries[entry['ID']] = entry
     return unique_entries
 
+
 def write_bib_file(entries, output_file):
     """
     Write bibtex entries to a file.
@@ -44,11 +49,12 @@ def write_bib_file(entries, output_file):
     db.entries = entries
     
     writer = bibtexparser.bwriter.BibTexWriter()
-    writer.indent = '    '  # Set indentation
-    writer.order_entries_by = ('ID',)  # Sort by ID
+    writer.indent = '    '
+    writer.order_entries_by = ('ID',)
     
     with open(output_file, 'w', encoding='utf-8') as bibfile:
         bibfile.write(writer.write(db))
+
 
 def get_all_entries(input_files):
     """
@@ -68,4 +74,4 @@ def get_all_entries(input_files):
                 all_entries.extend(bib_database.entries)
         except Exception as e:
             print(f"Error processing {fname}: {str(e)}")
-    return all_entries 
+    return all_entries
