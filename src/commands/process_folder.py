@@ -1,7 +1,16 @@
+#!/usr/bin/env python3
+"""Process all BibTeX files in a folder and merge them into a single file."""
+
 import argparse
 import glob
 import os
-from bib_utils import get_all_entries, process_bib_entries, write_bib_file, sort_keys_by_year
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from core.utils import get_all_entries, process_bib_entries, write_bib_file, sort_keys_by_year
+
 
 def process_bib_folder(folder_path, output_file, output_keys=None):
     """
@@ -12,7 +21,6 @@ def process_bib_folder(folder_path, output_file, output_keys=None):
         output_file (str): Path to output .bib file
         output_keys (str, optional): Path to output keys file
     """
-    # Get all .bib files in the folder
     bib_files = glob.glob(os.path.join(folder_path, "*.bib"))
     
     if not bib_files:
@@ -21,16 +29,10 @@ def process_bib_folder(folder_path, output_file, output_keys=None):
     
     print(f"Found {len(bib_files)} .bib files in {folder_path}")
     
-    # Get all entries from input files
     all_entries = get_all_entries(bib_files)
-    
-    # Process entries to remove duplicates
     unique_entries = process_bib_entries(all_entries)
-    
-    # Write deduplicated bibtex
     write_bib_file(list(unique_entries.values()), output_file)
     
-    # Write keys if requested
     if output_keys:
         unique_keys = sort_keys_by_year(unique_entries.keys())
         with open(output_keys, 'w') as f:
@@ -39,6 +41,7 @@ def process_bib_folder(folder_path, output_file, output_keys=None):
     
     print(f"Successfully processed {len(bib_files)} files into {output_file}")
     print(f"Total unique entries: {len(unique_entries)}")
+
 
 def main():
     parser = argparse.ArgumentParser(description='Process all .bib files in a folder')
@@ -49,5 +52,6 @@ def main():
     args = parser.parse_args()
     process_bib_folder(args.folder, args.output, args.keys)
 
+
 if __name__ == '__main__':
-    main() 
+    main()
